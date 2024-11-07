@@ -21,4 +21,4 @@ jobs:
           webhook_url: "${{ secrets.WEBHOOK_URL }}"
 
       - name: Check Webhook Response Code
-        run: echo "Webhook response code: ${{ steps.teams_notify.outputs.response_code }}"
+        run: echo "${{ steps.teams_notify.outputs.response_code }}"
