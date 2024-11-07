@@ -18,7 +18,7 @@ def prepare_event_data_and_call_notifier():
 
     http_response_status_code = 0
 
-    if event_data.keys().contains("pull_request"):
+    if "pull_request" in event_data.keys():
 
         # Prepare the payload to send to the webhook
         data = {
