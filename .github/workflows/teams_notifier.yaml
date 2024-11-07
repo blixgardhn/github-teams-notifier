@@ -17,8 +17,6 @@ jobs:
       - name: Run Teams Notify Action
         id: teams_notify
         uses: ./
-        with:
-          webhook_url: "${{ secrets.WEBHOOK_URL }}"
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
 
