@@ -1,0 +1,78 @@
+{
+    "type": "message",
+    "summary": "{{ card_preview }}",  
+    "attachments": [
+        {
+            "contentType": "application/vnd.microsoft.card.adaptive",
+            "content": {
+                "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                "type": "AdaptiveCard",
+                "version": "1.4",
+                "body": [
+                    {
+                        "type": "TextBlock",
+                        "text": "{{ body_title }}",
+                        "weight": "Bolder",
+                        "size": "Large"
+                    },
+                    {
+                        "type": "ColumnSet",
+                        "columns": [
+                            {
+                                "type": "Column",
+                                "items": [
+                                    {
+                                        "type": "Image",
+                                        "style": "person",
+                                        "url": "{{ user_avatar_url }}",
+                                        "altText": "[{{ user_login }}]({{ user_url }})",
+                                        "size": "small"
+                                    }
+                                ],
+                                "width": "auto"
+                            },
+                            {
+                                "type": "Column",
+                                "items": [
+                                    {
+                                        "type": "TextBlock",
+                                        "weight": "bolder",
+                                        "text": "[{{ user_login }}]({{ user_url }})",
+                                        "wrap": "True"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "spacing": "none",
+                                        "text": "{{ updated_at }}",
+                                        "isSubtle": "True",
+                                        "wrap": "True"
+                                    }
+                                ],
+                                "width": "stretch"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TextBlock",
+                        "text": "{{ body_title }}",
+                        "weight": "Bolder",
+                        "size": "Default",
+                        "wrap": "True"
+                    },
+                    {
+                        "type": "TextBlock",
+                        "text": "{{ body }}",
+                        "wrap": "True"
+                    }
+                ],
+                "actions": [
+                    {
+                        "type": "Action.OpenUrl",
+                        "title": "{{ action_title }}",
+                        "url": "{{ action_url }}"
+                    }
+                ]
+            }
+        }
+    ]
+}

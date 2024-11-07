@@ -1,12 +1,7 @@
 # action.yml
 name: "GitHub Notifications Action"
-description: "A GitHub Action that listens to events and sends notifications"
+description: "A GitHub Action that listens to events and sends notifications. Requires secrets.WEBHOOK_URL to be set "
 author: "Håvard K. Blixgård, Helse Nord IKT"
-
-inputs:
-  webhook_url:
-    description: "The URL to send pull request data to"
-    required: true
 
 outputs:
   response_code:
