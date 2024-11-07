@@ -13,7 +13,7 @@ class TeamsPublisher:
         """
         Send a notification to the webhook URL about a new pull request.
         """
-        template_path = 'templates'
+        template_path = template_path = os.path.join(os.path.dirname(__file__), "templates")
         template_file = 'adaptive_card_template.json.j2'
         
         env = Environment(loader=FileSystemLoader(template_path))
