@@ -19,6 +19,8 @@ jobs:
         uses: ./
         with:
           webhook_url: "${{ secrets.WEBHOOK_URL }}"
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
 
       - name: Check Webhook Response Code
         run: echo "${{ steps.teams_notify.outputs.response_code }}"

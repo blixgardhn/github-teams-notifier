@@ -7,7 +7,7 @@ from teams_publisher import TeamsPublisher
 
 def prepare_event_data_and_call_notifier():
     # Retrieve the webhook URL from the environment variable
-    webhook_url = os.getenv("INPUT_WEBHOOK_URL")
+    webhook_url = os.getenv("WEBHOOK_URL")
 
     # Load the pull request event data from the GitHub event payload file
     event_path = os.getenv("GITHUB_EVENT_PATH")
