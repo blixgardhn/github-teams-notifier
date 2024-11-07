@@ -1,5 +1,7 @@
 {
     "type": "message",
+    "summary": "{{ card_preview }}",  // This will appear in the preview
+
     "attachments": [
         {
             "contentType": "application/vnd.microsoft.card.adaptive",
@@ -10,7 +12,7 @@
                 "body": [
                     {
                         "type": "TextBlock",
-                        "text": "Pull request - {{ repo_name }}",
+                        "text": "{{ body_title }}",
                         "weight": "Bolder",
                         "size": "Large"
                     },
@@ -53,22 +55,22 @@
                     },
                     {
                         "type": "TextBlock",
-                        "text": "{{ pr_title }}",
+                        "text": "{{ body_title }}",
                         "weight": "Bolder",
                         "size": "Default",
                         "wrap": "True"
                     },
                     {
                         "type": "TextBlock",
-                        "text": "{{ pr_body }}",
+                        "text": "{{ body }}",
                         "wrap": "True"
                     }
                 ],
                 "actions": [
                     {
                         "type": "Action.OpenUrl",
-                        "title": "View Pull Request",
-                        "url": "{{ pr_url }}"
+                        "title": "{{ action_title }}",
+                        "url": "{{ action_url }}"
                     }
                 ]
             }

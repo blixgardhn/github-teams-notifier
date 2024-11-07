@@ -19,9 +19,7 @@ def prepare_event_data_and_call_notifier():
         event_data = json.load(f)
 
     teams_publisher = TeamsPublisher(webhook_url)
-
     http_response_status_code = 0
-
     if "pull_request" in event_data.keys():
 
         # Prepare the payload to send to the webhook

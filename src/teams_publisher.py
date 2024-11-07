@@ -1,5 +1,6 @@
 import os
-import datetime
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 import requests
 import json
 
@@ -15,23 +16,23 @@ class TeamsPublisher:
         Send a notification to the webhook URL about a new pull request.
         """
         template_path = template_path = os.path.join(os.path.dirname(__file__), "templates")
-        template_file = 'adaptive_card_template.json.j2'
-        
+        template_file = 'adaptive_card_template.json.j2'        
         env = Environment(loader=FileSystemLoader(template_path))
         template = env.get_template(template_file)
  
         pr = data["pr"]
-        print(data)
         adaptive_card_message = template.render(
             repo_name=data['repo'],
-            pr_title=pr.get("title"),
-            pr_body=pr['body'] or "No description provided.",
-            pr_url=pr['html_url'],
+            card_preview=f'Pull request - {{ repo_name }}',
+            body_title=f'Pull request - {{ repo_name }}',
+            body=pr['body'] or "No description provided.",
+            action_title='View Pull Request'
+            action_url=pr['html_url'],
             user_login=pr['user']['login'],
             user_url=pr['user']['html_url'],
             user_avatar_url=pr['user']['avatar_url'],
-            created_at=pr['created_at'], # datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'), #pr.created_at.astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ'),
-            updated_at=pr['updated_at'] # datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ') #pr.updated_at.astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ')
+            created_at=datetime.strptime(pr['created_at'], '%Y-%m-%dT%H:%M:%SZ').astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ'),
+            updated_at=datetime.strptime(pr['updated_at'], '%Y-%m-%dT%H:%M:%SZ').astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ')
         )
 
         try:
