@@ -1,5 +1,5 @@
 # .github/workflows/teams_notifier.yml
-name: "Run Notify PR Action on Pull Request or manual trigger"
+name: "Run Notify PR Action on Pull Request or Manual Trigger"
 
 on:
   workflow_dispatch:
