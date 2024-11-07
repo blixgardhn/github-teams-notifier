@@ -7,8 +7,8 @@ class TeamsPublisher:
         self.webhook_url = webhook_url
 
     def send_pull_request_notification(self, data):
-        pr_data = {'text': data['pr_title']}
-        return self.send_to_webhook(data)
+        pr_data = {'text': 'Text for teams from Github Action'}
+        return self.send_to_webhook(pr_data)
     
     def send_to_webhook(self, payload):
         # Send the request to the webhook
