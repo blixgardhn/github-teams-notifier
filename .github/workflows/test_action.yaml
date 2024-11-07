@@ -17,9 +17,6 @@ jobs:
         # uses: shipyard/github-action/fetch-shipyard-env@1.0.0
         with:
           num: 11
-          
-      - name: Print the square
-        run: echo "${{ steps.get_square.outputs.num_squared }}"
-      
+
       - name: Display the square of the input number
         run: echo "The square of the number is ${{ steps.get_square.outputs.num_squared }}"
