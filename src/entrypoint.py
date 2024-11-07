@@ -27,12 +27,8 @@ def prepare_event_data_and_call_notifier():
         # Prepare the payload to send to the webhook
         data = {
             "pr_number": event_data["number"],
-            "pr": event_data["pull_request"],
-            "repo": full_repo_name.split('/', 2)[1],
-            "pr_title": event_data["pull_request"]["title"],
-            "pr_body": event_data["pull_request"]["body"],
-            "pr_user": event_data["pull_request"]["user"]["login"],
-            "pr_url": event_data["pull_request"]["html_url"]
+            "pr": event_data.get("pull_request", {}),
+            "repo": full_repo_name.split('/', 2)[1]
         }
         
         http_response_status_code = teams_publisher.send_pull_request_notification(data)
