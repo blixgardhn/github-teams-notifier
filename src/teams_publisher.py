@@ -26,7 +26,7 @@ class TeamsPublisher:
             card_preview=f'Pull request - {{ repo_name }}',
             body_title=f'Pull request - {{ repo_name }}',
             body=pr['body'] or "No description provided.",
-            action_title='View Pull Request'
+            action_title='View Pull Request',
             action_url=pr['html_url'],
             user_login=pr['user']['login'],
             user_url=pr['user']['html_url'],
