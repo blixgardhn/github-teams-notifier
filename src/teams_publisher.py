@@ -19,16 +19,6 @@ class TeamsPublisher:
         env = Environment(loader=FileSystemLoader(template_path))
         template = env.get_template(template_file)
  
-
-        data = {
-            "pr_number": event_data["number"],
-            "pr": event_data["pull_request"],
-            "pr_title": event_data["pull_request"]["title"],
-            "pr_body": event_data["pull_request"]["body"],
-            "pr_user": event_data["pull_request"]["user"]["login"],
-            "pr_url": event_data["pull_request"]["html_url"]
-        }
-
         pr = data["pr"]
         adaptive_card_message = template.render(
             repo_name=pr['repo'].split('/', 2)[1],
