@@ -20,6 +20,7 @@ class TeamsPublisher:
         template = env.get_template(template_file)
  
         pr = data["pr"]
+        print(data)
         adaptive_card_message = template.render(
             repo_name=data['repo'],
             pr_title=pr['title'],
