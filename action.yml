@@ -1,5 +1,5 @@
 # action.yml
-name: "GitHub Notifications Action"
+name: "GitHub Teams Notifications Action"
 description: "A GitHub Action that listens to events and sends notifications. Requires secrets.WEBHOOK_URL to be set "
 author: "Håvard K. Blixgård, Helse Nord IKT"
 
