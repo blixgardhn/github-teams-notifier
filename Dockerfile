@@ -7,10 +7,10 @@ WORKDIR /app
 
 # Copy the action files
 COPY requirements.txt /app/requirements.txt
-COPY src/get_num_square.py /app/src/get_num_square.py
+COPY src/ /app/
 
 # Install dependencies
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Run the main script as the entry point
-ENTRYPOINT ["python", "/app/src/get_num_square.py"]
+ENTRYPOINT ["python", "/app/src/entrypoint.py"]

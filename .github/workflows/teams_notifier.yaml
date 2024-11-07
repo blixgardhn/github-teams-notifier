@@ -1,0 +1,24 @@
+# .github/workflows/teams_notifier.yml
+name: "Run Notify PR Action on Pull Request"
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  run-notify-pr-action:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Run Teams Notify Action
+        id: teams_notify
+        uses: ./
+        with:
+          webhook_url: ${{ secrets.WEBHOOK_URL }}
+
+      - name: Check Webhook Response Code
+        run: echo "Webhook response code: ${{ steps.teams_notify.outputs.response_code }}"

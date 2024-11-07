@@ -1,16 +1,16 @@
 # action.yml
 name: "GitHub Notifications Action"
 description: "A GitHub Action that listens to events and sends notifications"
+author: "Håvard K. Blixgård, Helse Nord IKT"
 
 inputs:
-  num:
-    description: "Enter a number"
+  webhook_url:
+    description: "The URL to send pull request data to"
     required: true
-    default: "1"
 
 outputs:
-  num_squared:
-    description: "Square of the input"
+  response_code:
+    description: "Response code from the webhook endpoint"
 
 runs:
   using: "docker"
