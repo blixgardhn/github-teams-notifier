@@ -9,8 +9,12 @@ def prepare_event_data_and_call_notifier():
     # Retrieve the webhook URL from the environment variable
     webhook_url = os.getenv("WEBHOOK_URL")
 
+    # Full repo name
+    full_repo_name = os.getenv("GITHUB_REPOSITORY")
+
     # Load the pull request event data from the GitHub event payload file
     event_path = os.getenv("GITHUB_EVENT_PATH")
+    
     with open(event_path, 'r') as f:
         event_data = json.load(f)
 
@@ -24,6 +28,7 @@ def prepare_event_data_and_call_notifier():
         data = {
             "pr_number": event_data["number"],
             "pr": event_data["pull_request"],
+            "repo": full_repo_name.split('/', 2)[1],
             "pr_title": event_data["pull_request"]["title"],
             "pr_body": event_data["pull_request"]["body"],
             "pr_user": event_data["pull_request"]["user"]["login"],

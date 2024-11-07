@@ -21,7 +21,7 @@ class TeamsPublisher:
  
         pr = data["pr"]
         adaptive_card_message = template.render(
-            repo_name=pr['repo'].split('/', 2)[1],
+            repo_name=data['repo'],
             pr_title=pr['title'],
             pr_body=pr['body'] or "No description provided.",
             pr_url=pr['html_url'],
