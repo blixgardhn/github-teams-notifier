@@ -17,7 +17,6 @@ class TeamsPublisher:
         template_file = 'adaptive_card_template.json.j2'
         
         env = Environment(loader=FileSystemLoader(template_path))
-        print(env.searchpath)
         template = env.get_template(template_file)
  
 
