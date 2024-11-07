@@ -23,6 +23,7 @@ def prepare_event_data_and_call_notifier():
         # Prepare the payload to send to the webhook
         data = {
             "pr_number": event_data["number"],
+            "pr": event_data["pull_request"],
             "pr_title": event_data["pull_request"]["title"],
             "pr_body": event_data["pull_request"]["body"],
             "pr_user": event_data["pull_request"]["user"]["login"],
