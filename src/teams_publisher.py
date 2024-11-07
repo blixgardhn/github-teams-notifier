@@ -38,7 +38,7 @@ class TeamsPublisher:
         try:
             adaptive_card_message = json.loads(adaptive_card_message)
         except Exception as e:
-            print(f"Failed to serialize pull request {pr.title} in {repo_name} with message: \n{adaptive_card_message} \nAnd exception: {e}")
+            print(f"Failed to serialize pull request {pr.get('title')} in {data.get('repo')} with message: \n{adaptive_card_message} \nAnd exception: {e}")
 
         # pr_data = {'text': 'Text for teams from Github Action'}
         return self.send_to_webhook(adaptive_card_message)
