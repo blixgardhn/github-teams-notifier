@@ -28,8 +28,8 @@ class TeamsPublisher:
             user_login=pr['user']['login'],
             user_url=pr['user']['html_url'],
             user_avatar_url=pr['user']['avatar_url'],
-            created_at=datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'), #pr.created_at.astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ'),
-            updated_at=datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ') #pr.updated_at.astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ')
+            created_at=pr['created_at'], # datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'), #pr.created_at.astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ'),
+            updated_at=pr['updated_at'] # datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ') #pr.updated_at.astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ')
         )
 
         try:
