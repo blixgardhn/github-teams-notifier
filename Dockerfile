@@ -7,7 +7,7 @@ WORKDIR /app
 
 # Copy the action files
 COPY requirements.txt /app/requirements.txt
-COPY src/ /app/
+COPY src/ /app/src
 
 # Install dependencies
 RUN pip install --no-cache-dir -r /app/requirements.txt
