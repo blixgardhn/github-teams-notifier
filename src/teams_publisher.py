@@ -23,8 +23,8 @@ class TeamsPublisher:
         pr = data["pr"]
         adaptive_card_message = template.render(
             repo_name=data['repo'],
-            card_preview=f'Pull request - {{ repo_name }}',
-            body_title=f'Pull request - {{ repo_name }}',
+            card_preview=f'Pull request - { repo_name }',
+            body_title=f'Pull request - { repo_name }',
             body=pr['body'] or "No description provided.",
             action_title='View Pull Request',
             action_url=pr['html_url'],
