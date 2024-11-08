@@ -23,7 +23,7 @@ def prepare_event_data_and_call_notifier():
 
         # Prepare the payload to send to the webhook
         data = {
-            "action_title:": "Åpne pull request",
+            "action_title:": 'Vis pull request',
             "event_number": event_data["number"],
             "event": event_data.get("pull_request", {}),
             "repo": full_repo_name.split('/', 2)[1]
