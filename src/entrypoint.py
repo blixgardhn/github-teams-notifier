@@ -28,7 +28,7 @@ def prepare_event_data_and_call_notifier():
             "repo": full_repo_name.split('/', 2)[1]
         }
         
-        http_response_status_code = teams_publisher_pr.send_pull_request_notification(data)
+        http_response_status_code = teams_publisher_pr.send_notification(data)
     else:
         print(f'Unknown event inside event_data. Not in list [pull_request]')
         
