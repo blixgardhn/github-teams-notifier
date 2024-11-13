@@ -1,6 +1,6 @@
 # action.yml
 name: "GitHub Teams Notifications Action"
-description: "A GitHub Action that listens to events and sends notifications. Requires environment variable WEBHOOK_URL_PR to be set in workflow"
+description: "A GitHub Action that listens to events and sends notifications. Requires environment variable WEBHOOK_URL_PR."
 author: "Håvard K. Blixgård, Helse Nord IKT"
 
 outputs:
