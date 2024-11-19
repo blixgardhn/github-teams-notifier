@@ -34,7 +34,7 @@ class TeamsPublisher:
             user_login=ev['user']['login'],
             user_url=ev['user']['html_url'],
             user_avatar_url=ev['user']['avatar_url'],
-            mentions=self.get_mentions(data),
+            mentions=self.get_mentions(ev),
             created_at=datetime.strptime(ev['created_at'], '%Y-%m-%dT%H:%M:%SZ').astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ'),
             updated_at=datetime.strptime(ev['updated_at'], '%Y-%m-%dT%H:%M:%SZ').astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ')
         )
@@ -47,11 +47,11 @@ class TeamsPublisher:
         return self.send_to_webhook(adaptive_card_message)
     
 
-    def get_mentions(self, data):
+    def get_mentions(self, event_data):
         mentions = []
-        print(f'data.keys: {data.keys()}')
-        if 'requested_reviewers' in data.keys():
-            for rev in data['requested_reviewers']:
+        print(f'data.keys: {event_data.keys()}')
+        if 'requested_reviewers' in event_data.keys():
+            for rev in event_data['requested_reviewers']:
                 print(f'reviewer: {rev}')
                 rev['name'] = rev['login']
                 if len(self.ad_user_mappings) == 0:
