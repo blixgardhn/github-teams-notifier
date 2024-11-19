@@ -10,7 +10,7 @@ from jinja2 import Environment, FileSystemLoader
 class TeamsPublisher:
     def __init__(self, webhook_url:str):
         self.webhook_url = webhook_url
-        self.ad_user_mappings = os.getenv("AD_USER_MAPPINGS", "[]")
+        self.ad_user_mappings = json.loads(os.getenv("AD_USER_MAPPINGS", "[]"))
 
 
     def send_notification(self, data):
