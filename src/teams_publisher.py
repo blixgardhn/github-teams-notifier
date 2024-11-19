@@ -46,15 +46,16 @@ class TeamsPublisher:
 
     def add_mentions(self, data):
         mentions = []
-        for rev in data['requested_reviewers']:
-            mentions.append({
-                "type": "mention",
-                "text": f"<at>{rev['login']}</at>",
-                "mentioned": {
-                    "id": rev['id'],
-                    "name": rev['login']
-                }
-            })
+        if 'requested_reviewers' in data.keys():
+            for rev in data['requested_reviewers']:
+                mentions.append({
+                    "type": "mention",
+                    "text": f"<at>{rev['login']}</at>",
+                    "mentioned": {
+                        "id": rev['id'],
+                        "name": rev['login']
+                    }
+                })
         return json.dumps(mentions)
 
 
