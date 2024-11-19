@@ -34,7 +34,7 @@ class TeamsPublisher:
             user_login=ev['user']['login'],
             user_url=ev['user']['html_url'],
             user_avatar_url=ev['user']['avatar_url'],
-            mentions=self.add_mentions(data),
+            mentions=self.get_mentions(data),
             created_at=datetime.strptime(ev['created_at'], '%Y-%m-%dT%H:%M:%SZ').astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ'),
             updated_at=datetime.strptime(ev['updated_at'], '%Y-%m-%dT%H:%M:%SZ').astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ')
         )
