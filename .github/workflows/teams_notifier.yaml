@@ -19,6 +19,7 @@ jobs:
         uses: ./
         env:
           WEBHOOK_URL_PR: ${{ secrets.WEBHOOK_URL_DEV }}
+          AD_USER_MAPPINGS: ${{ secrets.AD_USER_MAPPINGS }}
 
       - name: Check Webhook Response Code
         run: echo "${{ steps.teams_notify.outputs.response_code }}"

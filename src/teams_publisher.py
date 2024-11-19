@@ -10,6 +10,8 @@ from jinja2 import Environment, FileSystemLoader
 class TeamsPublisher:
     def __init__(self, webhook_url:str):
         self.webhook_url = webhook_url
+        self.ad_user_mappings = json.loads(os.getenv("AD_USER_MAPPINGS", "[]"))
+
 
     def send_notification(self, data):
         """
@@ -21,6 +23,10 @@ class TeamsPublisher:
         template = env.get_template(template_file)
  
         ev = data["event"]
+        mentions=self.get_mentions(ev)
+        mentions_names = ", ".join(mention.get("text", "") for mention in mentions)
+
+
         adaptive_card_message = template.render(
             repo_name=data['repo'],
             card_title=f'Pull request - { data.get("repo") }',
@@ -31,6 +37,8 @@ class TeamsPublisher:
             user_login=ev['user']['login'],
             user_url=ev['user']['html_url'],
             user_avatar_url=ev['user']['avatar_url'],
+            mentions=json.dumps(mentions),
+            mentions_names = mentions_names,
             created_at=datetime.strptime(ev['created_at'], '%Y-%m-%dT%H:%M:%SZ').astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ'),
             updated_at=datetime.strptime(ev['updated_at'], '%Y-%m-%dT%H:%M:%SZ').astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ')
         )
@@ -41,6 +49,37 @@ class TeamsPublisher:
             print(f"Failed to serialize data {data} with message: \n{adaptive_card_message} \nAnd exception: {e}")
 
         return self.send_to_webhook(adaptive_card_message)
+    
+
+    def get_mentions(self, event_data):
+        mentions = []
+        print(f'data.keys: {event_data.keys()}')
+        if 'requested_reviewers' in event_data.keys():
+            for rev in event_data['requested_reviewers']:
+                print(f'reviewer: {rev}')
+                rev['name'] = rev['login']
+                if len(self.ad_user_mappings) == 0:
+                    usr = rev
+                else:
+                    for user in self.ad_user_mappings:
+                        if user['github_login'] == rev['login']:
+                            rev['login'] = user['ad_login']
+                            rev['id'] = user['id']
+                            rev['name'] = user['name']
+                            break
+                            
+
+                mentions.append({
+                    "type": "mention",
+                    "text": f"<at>{rev['login']}</at>",
+                    "mentioned": {
+                        "id": rev['id'],
+                        "name": rev['name']
+                    }
+                })
+        
+        print(f'Returning mentions like so: {mentions}')
+        return mentions
 
 
     def send_to_webhook(self, payload):
