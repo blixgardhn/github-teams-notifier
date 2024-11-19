@@ -49,8 +49,10 @@ class TeamsPublisher:
 
     def get_mentions(self, data):
         mentions = []
+        print(f'data.keys: {data.keys()}')
         if 'requested_reviewers' in data.keys():
             for rev in data['requested_reviewers']:
+                print(f'reviewer: {rev}')
                 rev['name'] = rev['login']
                 if len(self.ad_user_mappings) == 0:
                     usr = rev
@@ -70,6 +72,8 @@ class TeamsPublisher:
                         "name": rev['name']
                     }
                 })
+        
+        print(f'Returning mentions like so: {mentions}')
         return json.dumps(mentions)
 
 
