@@ -21,7 +21,6 @@ class TeamsPublisher:
         template_file = 'adaptive_card_template.json.j2'        
         env = Environment(loader=FileSystemLoader(template_path))
         template = env.get_template(template_file)
-
  
         ev = data["event"]
         adaptive_card_message = template.render(
@@ -50,6 +49,7 @@ class TeamsPublisher:
     def get_mentions(self, event_data):
         mentions = []
         print(f'data.keys: {event_data.keys()}')
+        print(f'AD_USER_MAPPINGS: {self.ad_user_mappings}')
         if 'requested_reviewers' in event_data.keys():
             for rev in event_data['requested_reviewers']:
                 print(f'reviewer: {rev}')
