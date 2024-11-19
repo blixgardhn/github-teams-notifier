@@ -31,6 +31,7 @@ class TeamsPublisher:
             user_login=ev['user']['login'],
             user_url=ev['user']['html_url'],
             user_avatar_url=ev['user']['avatar_url'],
+            mentions=self.add_mentions(data),
             created_at=datetime.strptime(ev['created_at'], '%Y-%m-%dT%H:%M:%SZ').astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ'),
             updated_at=datetime.strptime(ev['updated_at'], '%Y-%m-%dT%H:%M:%SZ').astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ')
         )
@@ -41,6 +42,20 @@ class TeamsPublisher:
             print(f"Failed to serialize data {data} with message: \n{adaptive_card_message} \nAnd exception: {e}")
 
         return self.send_to_webhook(adaptive_card_message)
+    
+
+    def add_mentions(self, data):
+        mentions = []
+        for rev in data['requested_reviewers']:
+            mentions.append({
+                "type": "mention",
+                "text": f"<at>{rev['login']}</at>",
+                "mentioned": {
+                    "id": rev['id'],
+                    "name": rev['login']
+                }
+            })
+        return json.dumps(mentions)
 
 
     def send_to_webhook(self, payload):
