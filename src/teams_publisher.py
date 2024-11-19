@@ -23,6 +23,10 @@ class TeamsPublisher:
         template = env.get_template(template_file)
  
         ev = data["event"]
+        mentions=self.get_mentions(ev)
+        mentions_names = ", ".join(mention.get("text", "") for mention in mentions)
+
+
         adaptive_card_message = template.render(
             repo_name=data['repo'],
             card_title=f'Pull request - { data.get("repo") }',
@@ -33,7 +37,8 @@ class TeamsPublisher:
             user_login=ev['user']['login'],
             user_url=ev['user']['html_url'],
             user_avatar_url=ev['user']['avatar_url'],
-            mentions=self.get_mentions(ev),
+            mentions=json.dumps(mentions),
+            mentions_names = mentions_names,
             created_at=datetime.strptime(ev['created_at'], '%Y-%m-%dT%H:%M:%SZ').astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ'),
             updated_at=datetime.strptime(ev['updated_at'], '%Y-%m-%dT%H:%M:%SZ').astimezone(ZoneInfo("Europe/Oslo")).strftime('%Y-%m-%dT%H:%M:%SZ')
         )
@@ -74,7 +79,7 @@ class TeamsPublisher:
                 })
         
         print(f'Returning mentions like so: {mentions}')
-        return json.dumps(mentions)
+        return mentions
 
 
     def send_to_webhook(self, payload):
