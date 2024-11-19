@@ -49,7 +49,6 @@ class TeamsPublisher:
     def get_mentions(self, event_data):
         mentions = []
         print(f'data.keys: {event_data.keys()}')
-        print(f'AD_USER_MAPPINGS: {self.ad_user_mappings}')
         if 'requested_reviewers' in event_data.keys():
             for rev in event_data['requested_reviewers']:
                 print(f'reviewer: {rev}')
@@ -59,7 +58,7 @@ class TeamsPublisher:
                 else:
                     for user in self.ad_user_mappings:
                         if user['github_login'] == rev['login']:
-                            rev['login'] = user['login']
+                            rev['login'] = user['github_login']
                             rev['id'] = user['id']
                             rev['name'] = user['name']
                             
