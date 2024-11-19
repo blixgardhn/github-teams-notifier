@@ -10,6 +10,8 @@ from jinja2 import Environment, FileSystemLoader
 class TeamsPublisher:
     def __init__(self, webhook_url:str):
         self.webhook_url = webhook_url
+        self.ad_user_mappings = os.getenv("AD_USER_MAPPINGS", "[]")
+
 
     def send_notification(self, data):
         """
@@ -19,6 +21,7 @@ class TeamsPublisher:
         template_file = 'adaptive_card_template.json.j2'        
         env = Environment(loader=FileSystemLoader(template_path))
         template = env.get_template(template_file)
+
  
         ev = data["event"]
         adaptive_card_message = template.render(
@@ -44,16 +47,27 @@ class TeamsPublisher:
         return self.send_to_webhook(adaptive_card_message)
     
 
-    def add_mentions(self, data):
+    def get_mentions(self, data):
         mentions = []
         if 'requested_reviewers' in data.keys():
             for rev in data['requested_reviewers']:
+                rev['name'] = rev['login']
+                if len(self.ad_user_mappings) == 0:
+                    usr = rev
+                else:
+                    for user in self.ad_user_mappings:
+                        if user['github_login'] == rev['login']:
+                            rev['login'] = user['login']
+                            rev['id'] = user['id']
+                            rev['name'] = user['name']
+                            
+
                 mentions.append({
                     "type": "mention",
                     "text": f"<at>{rev['login']}</at>",
                     "mentioned": {
                         "id": rev['id'],
-                        "name": rev['login']
+                        "name": rev['name']
                     }
                 })
         return json.dumps(mentions)
