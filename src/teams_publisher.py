@@ -58,9 +58,10 @@ class TeamsPublisher:
                 else:
                     for user in self.ad_user_mappings:
                         if user['github_login'] == rev['login']:
-                            rev['login'] = user['github_login']
+                            rev['login'] = user['ad_login']
                             rev['id'] = user['id']
                             rev['name'] = user['name']
+                            break
                             
 
                 mentions.append({
