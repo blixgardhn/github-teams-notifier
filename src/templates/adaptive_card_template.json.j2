@@ -1,6 +1,6 @@
 {
     "type": "message",
-    "summary": "{{ card_title }}",  
+    "summary": {{ card_title }},  
     "attachments": [
         {
             "contentType": "application/vnd.microsoft.card.adaptive",
@@ -11,7 +11,7 @@
                 "body": [
                     {
                         "type": "TextBlock",
-                        "text": "{{ card_title }}",
+                        "text": {{ card_title }},
                         "weight": "Bolder",
                         "size": "Large"
                     },
@@ -54,14 +54,14 @@
                     },
                     {
                         "type": "TextBlock",
-                        "text": "{{ body_title }}",
+                        "text": {{ body_title }},
                         "weight": "Bolder",
                         "size": "Default",
                         "wrap": "True"
                     },
                     {
                         "type": "TextBlock",
-                        "text": "{{ body }}",
+                        "text": {{ body }},
                         "wrap": "True"
                     },
                     {
@@ -73,7 +73,7 @@
                 "actions": [
                     {
                         "type": "Action.OpenUrl",
-                        "title": "{{ action_title }}",
+                        "title": {{ action_title }},
                         "url": "{{ action_url }}"
                     }
                 ],
