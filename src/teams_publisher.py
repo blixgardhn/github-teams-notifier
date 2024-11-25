@@ -28,11 +28,11 @@ class TeamsPublisher:
 
 
         adaptive_card_message = template.render(
-            repo_name=data['repo'],
-            card_title=f'Pull request - { data.get("repo") }',
-            body_title=ev.get("title"),
-            body=ev['body'] or "Ingen beskrivelse gitt.",
-            action_title=f'{data.get("action_title")}',
+            repo_name=json.dumps(data['repo']),
+            card_title=f'Pull request - { json.dumps(data.get("repo")) }',
+            body_title=json.dumps(ev.get("title")),
+            body=json.dumps(ev['body']) or "Ingen beskrivelse gitt.",
+            action_title=f'{json.dumps(data.get("action_title"))}',
             action_url=ev['html_url'],
             user_login=ev['user']['login'],
             user_url=ev['user']['html_url'],
