@@ -48,7 +48,7 @@ class TeamsPublisher:
         adaptive_card_message = template.render(
             card_title=json.dumps(f'{ data.get("event_type_name")} - { data.get("repo") }'),
             body_title=json.dumps(ev.get("title")),
-            body=json.dumps(f'{body} {body_post}'),
+            body=json.dumps(f'{body}\n{body_post}'),
             action_title=json.dumps(f'{ data.get("action_title")}'),
             action_url=ev['html_url'],
             user_login=ev['user']['login'],
