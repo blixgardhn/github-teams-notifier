@@ -19,6 +19,7 @@ def prepare_event_data_and_call_notifier():
     http_response_status_code = 0
 
     if DEBUG: print(event_data)
+    if DEBUG: print(event_data.keys())
 
     if "pull_request" in event_data.keys():
         # Retrieve the webhook URL from the environment variable
