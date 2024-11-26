@@ -39,9 +39,7 @@ class TeamsPublisher:
         if DEBUG: print(mentions_names)
 
         body = ev.get("body", None) or "Ingen beskrivelse"
-        if DEBUG: print(body)
         body_post = data.get("body_post", None) or ""
-        if DEBUG: print(body_post)
 
         if DEBUG: print(body)
 
