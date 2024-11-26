@@ -20,7 +20,7 @@ def prepare_event_data_and_call_notifier():
 
     if DEBUG: print(event_data)
     if DEBUG: print(event_data.keys())
-    if DEBUG: print(event_data.get("event").keys())
+    if DEBUG: print(event_data.get("event", {}).keys())
 
 
     if "review" in event_data.keys():
