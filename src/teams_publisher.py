@@ -6,6 +6,7 @@ import json
 
 from jinja2 import Environment, FileSystemLoader
 
+DEBUG = os.getenv("DEBUG", False)
 
 class TeamsPublisher:
     def __init__(self, webhook_url:str):
@@ -17,6 +18,8 @@ class TeamsPublisher:
         """
         Send a notification to the webhook URL about a new event
         """
+        if DEBUG: print(data)
+
         template_path = template_path = os.path.join(os.path.dirname(__file__), "templates")
         template_file = 'adaptive_card_template.json.j2'        
         env = Environment(loader=FileSystemLoader(template_path))
