@@ -18,6 +18,7 @@ class TeamsPublisher:
         """
         Send a notification to the webhook URL about a new event
         """
+        if DEBUG: print(data.keys())
         if DEBUG: print(data)
 
         template_path = template_path = os.path.join(os.path.dirname(__file__), "templates")
