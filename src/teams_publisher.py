@@ -38,10 +38,14 @@ class TeamsPublisher:
 
         if DEBUG: print(mentions_names)
 
-        if ev.get("body", "") == "" and data.get("body_post", "") == "":
-            body = "Ingen beskrivelse."
-        else:
-            body = f'{ev.get("body", "")} {data.get("body_post", "")}'
+        body = ev.get("body", "Ingen beskrivelse.")
+        if DEBUG: print(body)
+        body_post = data.get("body_post", "")
+        if DEBUG: print(body_post)
+
+        body = f'{ev.get("body", "")} {data.get("body_post", "")}'
+
+        if DEBUG: print(body)
 
         adaptive_card_message = template.render(
             card_title=json.dumps(f'{ data.get("event_type_name")} - { data.get("repo") }'),
