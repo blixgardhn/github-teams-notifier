@@ -34,7 +34,7 @@ def prepare_event_data_and_call_notifier():
         data = {
             "event_type_name": f'PR {review.get("state", "unset")}',
             "action_title": 'Gå til pull request',
-            "event": review,
+            "event": pull_request,
             "repo": full_repo_name.split('/', 2)[1],
             "body_post": f'\nReviewer: {review.get("user").get("login")}',
             "mention_users": [pull_request.get("user")]
