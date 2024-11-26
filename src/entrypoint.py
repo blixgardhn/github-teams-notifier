@@ -21,22 +21,7 @@ def prepare_event_data_and_call_notifier():
     if DEBUG: print(event_data)
     if DEBUG: print(event_data.keys())
 
-    if "pull_request" in event_data.keys():
-        # Retrieve the webhook URL from the environment variable
-        webhook_url_pr = os.getenv("WEBHOOK_URL_PR")
-        teams_publisher_pr = TeamsPublisher(webhook_url_pr)
-
-        # Prepare the payload to send to the webhook
-        data = {
-            "event_type_name": "Pull request",
-            "action_title": 'Gå til pull request',
-            "event": event_data.get("pull_request", {}),
-            "repo": full_repo_name.split('/', 2)[1],
-            "mention_users": event_data.get('requested_reviewers', [])
-        }
-        http_response_status_code = teams_publisher_pr.send_notification(data)        
-
-    elif "review" in event_data.keys():
+    if "review" in event_data.keys():
         # Retrieve the webhook URL from the environment variable
         webhook_url_pr = os.getenv("WEBHOOK_URL_PR")
         teams_publisher_pr = TeamsPublisher(webhook_url_pr)
@@ -52,6 +37,21 @@ def prepare_event_data_and_call_notifier():
             "mention_users": [event_data.get("user")]
         }
         http_response_status_code = teams_publisher_pr.send_notification(data)
+
+    elif "pull_request" in event_data.keys():
+        # Retrieve the webhook URL from the environment variable
+        webhook_url_pr = os.getenv("WEBHOOK_URL_PR")
+        teams_publisher_pr = TeamsPublisher(webhook_url_pr)
+
+        # Prepare the payload to send to the webhook
+        data = {
+            "event_type_name": "Pull request",
+            "action_title": 'Gå til pull request',
+            "event": event_data.get("pull_request", {}),
+            "repo": full_repo_name.split('/', 2)[1],
+            "mention_users": event_data.get('requested_reviewers', [])
+        }
+        http_response_status_code = teams_publisher_pr.send_notification(data)        
 
     else:
         print(f'Unknown event inside event_data. Not in list [pull_request]')
