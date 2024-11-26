@@ -4,6 +4,7 @@ import json
 
 from teams_publisher import TeamsPublisher
 
+DEBUG = os.getenv("DEBUG", False)
 
 def prepare_event_data_and_call_notifier():
     # Full repo name
@@ -16,6 +17,8 @@ def prepare_event_data_and_call_notifier():
         event_data = json.load(f)
 
     http_response_status_code = 0
+
+    if DEBUG: print(event_data)
 
     if "pull_request" in event_data.keys():
         # Retrieve the webhook URL from the environment variable
