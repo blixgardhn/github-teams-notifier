@@ -40,7 +40,7 @@ def prepare_event_data_and_call_notifier():
         # Prepare the payload to send to the webhook
         review = event_data.get("review")
         data = {
-            "event_type_name": f'PR {review.get("state", 'unset')}',
+            "event_type_name": f'PR {review.get("state", "unset")}',
             "action_title": 'Gå til pull request',
             "event": event_data.get("review", {}),
             "repo": full_repo_name.split('/', 2)[1],
