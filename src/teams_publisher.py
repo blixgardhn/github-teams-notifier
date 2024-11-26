@@ -30,7 +30,10 @@ class TeamsPublisher:
 
         ev = data["event"]
         mentions=self.get_mentions(data.get("mention_users", []))
-        mentions_names = ", ".join(mention.get("text", "") for mention in mentions)
+        if mentions:
+            mentions_names = ", ".join(mention.get("text", "") for mention in mentions)
+        else:
+            mentions_names = ""
 
         if DEBUG: print(mentions_names)
 
