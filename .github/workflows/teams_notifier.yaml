@@ -8,7 +8,8 @@ on:
   pull_request_review:
     types:
       - submitted  
-
+      - edited
+      - dismissed
 jobs:
   run-notify-pr-action:
     runs-on: ubuntu-latest

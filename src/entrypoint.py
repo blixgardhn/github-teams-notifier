@@ -30,13 +30,14 @@ def prepare_event_data_and_call_notifier():
         
         # Prepare the payload to send to the webhook
         review = event_data.get("review")
+        pull_request = event_data.get("pull_request")
         data = {
             "event_type_name": f'PR {review.get("state", "unset")}',
             "action_title": 'Gå til pull request',
-            "event": event_data.get("review", {}),
+            "event": review,
             "repo": full_repo_name.split('/', 2)[1],
-            "body_post": f'\nReviewer: {event_data.get("reviewer").get("login")}',
-            "mention_users": [event_data.get("user")]
+            "body_post": f'\nReviewer: {review.get("user").get("login")}',
+            "mention_users": [pull_request.get("user")]
         }
         http_response_status_code = teams_publisher_pr.send_notification(data)
 
