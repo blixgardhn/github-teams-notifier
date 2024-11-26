@@ -21,6 +21,7 @@ jobs:
         id: teams_notify
         uses: ./
         env:
+          DEBUG: True
           WEBHOOK_URL_PR: ${{ secrets.WEBHOOK_URL_DEV }}
           AD_USER_MAPPINGS: ${{ secrets.AD_USER_MAPPINGS }}
 
