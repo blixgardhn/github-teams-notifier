@@ -18,6 +18,7 @@ class TeamsPublisher:
         """
         Send a notification to the webhook URL about a new event
         """
+        if DEBUG: print("Inside TeamsPublisher.send_notification()")
         if DEBUG: print(data.keys())
         if DEBUG: print(data)
 
