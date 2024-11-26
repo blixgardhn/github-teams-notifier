@@ -25,9 +25,13 @@ class TeamsPublisher:
         env = Environment(loader=FileSystemLoader(template_path))
         template = env.get_template(template_file)
  
+        if DEBUG: print(data.get("mention_users"))
+
         ev = data["event"]
         mentions=self.get_mentions(data.get("mention_users", []))
         mentions_names = ", ".join(mention.get("text", "") for mention in mentions)
+
+        if DEBUG: print(mentions_names)
 
         adaptive_card_message = template.render(
             card_title=json.dumps(f'{ data.get("event_type_name")} - { data.get("repo") }'),
