@@ -23,14 +23,13 @@ class TeamsPublisher:
         template = env.get_template(template_file)
  
         ev = data["event"]
-        mentions=self.get_mentions(ev)
+        mentions=self.get_mentions(data.get("mention_users", []))
         mentions_names = ", ".join(mention.get("text", "") for mention in mentions)
 
-
         adaptive_card_message = template.render(
-            card_title=json.dumps(f'Pull request - { data.get("repo") }'),
+            card_title=json.dumps(f'{ data.get("event_type_name")} - { data.get("repo") }'),
             body_title=json.dumps(ev.get("title")),
-            body=json.dumps(ev['body']) or "Ingen beskrivelse gitt.",
+            body=json.dumps(f'{ev.get('body')} {ev.get('body_post', '')}') or "Ingen beskrivelse.",
             action_title=json.dumps(f'{ data.get("action_title")}'),
             action_url=ev['html_url'],
             user_login=ev['user']['login'],
@@ -50,32 +49,30 @@ class TeamsPublisher:
         return self.send_to_webhook(adaptive_card_message)
     
 
-    def get_mentions(self, event_data):
+    def get_mentions(self, user_list):
         mentions = []
-        print(f'data.keys: {event_data.keys()}')
-        if 'requested_reviewers' in event_data.keys():
-            for rev in event_data['requested_reviewers']:
-                print(f'reviewer: {rev}')
-                rev['name'] = rev['login']
-                if len(self.ad_user_mappings) == 0:
-                    usr = rev
-                else:
-                    for user in self.ad_user_mappings:
-                        if user['github_login'] == rev['login']:
-                            rev['login'] = user['ad_login']
-                            rev['id'] = user['id']
-                            rev['name'] = user['name']
-                            break
-                            
+        for usr in user_list:
+            print(f'reviewer: {usr}')
+            usr['name'] = usr['login']
+            if len(self.ad_user_mappings) == 0:
+                usr = usr
+            else:
+                for user in self.ad_user_mappings:
+                    if user['github_login'] == usr['login']:
+                        usr['login'] = user['ad_login']
+                        usr['id'] = user['id']
+                        usr['name'] = user['name']
+                        break
+                        
 
-                mentions.append({
-                    "type": "mention",
-                    "text": f"<at>{rev['login']}</at>",
-                    "mentioned": {
-                        "id": rev['id'],
-                        "name": rev['name']
-                    }
-                })
+            mentions.append({
+                "type": "mention",
+                "text": f"<at>{usr['login']}</at>",
+                "mentioned": {
+                    "id": usr['id'],
+                    "name": usr['name']
+                }
+            })
         
         print(f'Returning mentions like so: {mentions}')
         return mentions
