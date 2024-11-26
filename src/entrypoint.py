@@ -49,7 +49,7 @@ def prepare_event_data_and_call_notifier():
         # Prepare the payload to send to the webhook
         pull_request = event_data.get('pull_request')
         if DEBUG: print('Pull request data')
-        if DEBUG: print(pull_request).keys()
+        if DEBUG: print(pull_request.keys())
 
         data = {
             "event_type_name": "Pull request",
