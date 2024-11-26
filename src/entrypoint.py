@@ -44,8 +44,8 @@ def prepare_event_data_and_call_notifier():
             "action_title": 'Gå til pull request',
             "event": event_data.get("review", {}),
             "repo": full_repo_name.split('/', 2)[1],
-            "body_post": f'\nReviewer: {event_data.get('reviewer').get('login')}',
-            "mention_users": [event_data.get('user')]
+            "body_post": f'\nReviewer: {event_data.get("reviewer").get("login")}',
+            "mention_users": [event_data.get("user")]
         }
         http_response_status_code = teams_publisher_pr.send_notification(data)
 
