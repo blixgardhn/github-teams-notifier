@@ -49,9 +49,9 @@ def prepare_event_data_and_call_notifier():
         pull_request = event_data.get('pull_request')
         # If user is blacklisted, abort notification
         if not is_valid_user(pull_request, blacklist=pr_user_blacklist):
-            print(f'Pull request user {pull_request.get("user")} is found in blacklist: {pr_user_blacklist}. Not sending notification.')
+            print(f'Pull request user {pull_request.get("user").get("login")} is found in blacklist: {pr_user_blacklist}. Not sending notification.')
             return 0
-        if DEBUG: print(f'User {pull_request.get("user")} is not in blacklist: {pr_user_blacklist}')
+        if DEBUG: print(f'User {pull_request.get("user").get("login")} is not in blacklist: {pr_user_blacklist}')
 
         # Retrieve the webhook URL from the environment variable
         webhook_url_pr = os.getenv("WEBHOOK_URL_PR")
@@ -78,7 +78,7 @@ def prepare_event_data_and_call_notifier():
     return http_response_status_code
 
 def is_valid_user(event, blacklist=[]):
-    event_user = event.get("user", "")
+    event_user = event.get("user").get("login")
     return event_user not in blacklist
 
 
