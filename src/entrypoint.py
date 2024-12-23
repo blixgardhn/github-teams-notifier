@@ -12,6 +12,10 @@ def prepare_event_data_and_call_notifier():
 
     # Load the pull request event data from the GitHub event payload file
     event_path = os.getenv("GITHUB_EVENT_PATH")
+
+    # Pull request user blacklist
+    pr_user_blacklist_envvar = os.getenv("PR_USER_BLACKLIST", "")
+    pr_user_blacklist = pr_user_blacklist_envvar.split(",")
     
     with open(event_path, 'r') as f:
         event_data = json.load(f)
@@ -42,12 +46,18 @@ def prepare_event_data_and_call_notifier():
         http_response_status_code = teams_publisher_pr.send_notification(data)
 
     elif "pull_request" in event_data.keys():
+        pull_request = event_data.get('pull_request')
+        # If user is blacklisted, abort notification
+        if not is_valid_user(pull_request, blacklist=pr_user_blacklist):
+            print(f'Pull request user {pull_request.get("user").get("login")} is found in blacklist: {pr_user_blacklist}. Not sending notification.')
+            return 0
+        if DEBUG: print(f'User {pull_request.get("user").get("login")} is not in blacklist: {pr_user_blacklist}')
+
         # Retrieve the webhook URL from the environment variable
         webhook_url_pr = os.getenv("WEBHOOK_URL_PR")
         teams_publisher_pr = TeamsPublisher(webhook_url_pr)
 
         # Prepare the payload to send to the webhook
-        pull_request = event_data.get('pull_request')
         if DEBUG: print('Pull request data')
         if DEBUG: print(pull_request.keys())
 
@@ -66,6 +76,10 @@ def prepare_event_data_and_call_notifier():
     # Write output to the GitHub environment file for other workflow steps
     write_output_response_code(http_response_status_code)
     return http_response_status_code
+
+def is_valid_user(event, blacklist=[]):
+    event_user = event.get("user").get("login")
+    return event_user not in blacklist
 
 
 def write_output_response_code(output_string:str):
