@@ -51,6 +51,8 @@ def prepare_event_data_and_call_notifier():
         if not is_valid_user(pull_request, blacklist=pr_user_blacklist):
             print(f'Pull request user {pull_request.get("user")} is found in blacklist: {pr_user_blacklist}. Not sending notification.')
             return 0
+        if DEBUG: print(f'User {pull_request.get("user")} is not in blacklist: {pr_user_blacklist}')
+
         # Retrieve the webhook URL from the environment variable
         webhook_url_pr = os.getenv("WEBHOOK_URL_PR")
         teams_publisher_pr = TeamsPublisher(webhook_url_pr)
