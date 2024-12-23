@@ -43,7 +43,7 @@ class TeamsPublisher:
         body_post = data.get("body_post", None) or ""
 
         # Remove <details> tag for shorter text body
-        body = re.sub(r'<details>.*?</details>', '', body, flags=re.DOTALL)
+        body = re.sub(r'(?<!\\)<details>.*?</details>', '', body, flags=re.DOTALL)
 
 
         if DEBUG: print(body)
