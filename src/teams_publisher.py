@@ -1,4 +1,5 @@
 import os
+import re
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 import requests
@@ -40,6 +41,10 @@ class TeamsPublisher:
 
         body = ev.get("body", None) or "Ingen beskrivelse"
         body_post = data.get("body_post", None) or ""
+
+        # Remove <details> tag for shorter text body
+        body = re.sub(r'<details>.*?</details>', '', body, flags=re.DOTALL)
+
 
         if DEBUG: print(body)
 
